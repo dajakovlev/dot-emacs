@@ -45,3 +45,6 @@
   (setq ws-butler-keep-whitespace-before-point nil)
   :config
   (ws-butler-global-mode))
+
+;; racket-mode
+(use-package racket-mode)
