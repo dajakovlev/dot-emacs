@@ -1,0 +1,4 @@
+#+TITLE: My personal configuration for GNU Emacs
+#+AUTHOR: D. A. Jakovlev
+
+This repository contains my personal configuration for GNU Emacs.
