@@ -39,6 +39,12 @@
 ;;;              ;;;
 ;;;;;;;;;;;;;;;;;;;;
 
+;; Never use tabs for indentation
+(setq-default indent-tabs-mode nil)
+
+;; Add a newline automatically at the end of the file
+(setq-default require-final-newline t)
+
 ;; Font
 (set-face-attribute 'default nil
 		    :family "JetBrains Mono"
