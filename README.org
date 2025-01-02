@@ -1,0 +1,15 @@
+#+TITLE: My personal configuration for GNU Emacs
+#+AUTHOR: D. A. Jakovlev
+
+This repository contains my personal configuration for GNU Emacs.
+
+* Packages
+
+** Common packages
+
+| Package     | Description          |
+|-------------+----------------------|
+| [[https://github.com/radian-software/straight.el][straight.el]] | Package manager      |
+| [[https://github.com/jwiegley/use-package][use-package]] | Package configurator |
+| [[https://github.com/lewang/ws-butler][ws-butler]]   | Whitespace trimming  |
+| [[https://github.com/MetroWind/lab-theme][lab-theme]]   | Color theme          |
