@@ -7,9 +7,20 @@ This repository contains my personal configuration for GNU Emacs.
 
 ** Common packages
 
-| Package     | Description          |
-|-------------+----------------------|
-| [[https://github.com/radian-software/straight.el][straight.el]] | Package manager      |
-| [[https://github.com/jwiegley/use-package][use-package]] | Package configurator |
-| [[https://github.com/lewang/ws-butler][ws-butler]]   | Whitespace trimming  |
-| [[https://github.com/MetroWind/lab-theme][lab-theme]]   | Color theme          |
+| Package            | Description          |
+|--------------------+----------------------|
+| [[https://github.com/radian-software/straight.el][straight.el]]        | Package manager      |
+| [[https://github.com/jwiegley/use-package][use-package]]        | Package configurator |
+| [[https://github.com/lewang/ws-butler][ws-butler]]          | Whitespace trimming  |
+| [[https://github.com/MetroWind/lab-theme][lab-theme]]          | Color theme          |
+| [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] | Colorize parentheses |
+| [[https://github.com/auto-complete/auto-complete][auto-complete]]      | Auto completion      |
+
+** Programming Languages
+
+*** Common Lisp
+
+| Package  | Description                                      |
+|----------+--------------------------------------------------|
+| [[https://github.com/slime/slime][slime]]    | SLIME (Superior Lisp Interaction Mode for Emacs) |
+| [[https://github.com/purcell/ac-slime][ac-slime]] | Auto completion for SLIME                        |
