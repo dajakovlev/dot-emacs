@@ -29,7 +29,7 @@
 
 ;;; Other settings
 (defun load-settings/other ()
-  ;; Don't see warnings
+  ;; Don't show warnings
   (setq warning-minimum-level :error))
 
 ;;; GNU Emacs settings
