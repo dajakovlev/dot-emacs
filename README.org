@@ -7,20 +7,42 @@ This repository contains my personal configuration for GNU Emacs.
 
 ** Common packages
 
-| Package            | Description          |
-|--------------------+----------------------|
-| [[https://github.com/radian-software/straight.el][straight.el]]        | Package manager      |
-| [[https://github.com/jwiegley/use-package][use-package]]        | Package configurator |
-| [[https://github.com/lewang/ws-butler][ws-butler]]          | Whitespace trimming  |
-| [[https://github.com/MetroWind/lab-theme][lab-theme]]          | Color theme          |
-| [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] | Colorize parentheses |
-| [[https://github.com/auto-complete/auto-complete][auto-complete]]      | Auto completion      |
+| Package              | Description                        |
+|----------------------+------------------------------------|
+| [[https://github.com/radian-software/straight.el][straight]]             | Package manager                    |
+| [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] | Environment variables synchronizer |
+| [[https://github.com/lewang/ws-butler][ws-butler]]            | Whitespaces trimmer                |
+| [[https://github.com/company-mode/company-mode][company-mode]]         | Text and code completion framework |
+| [[https://github.com/MetroWind/lab-theme][lab-theme]]            | Color theme                        |
+| [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]   | Parentheses like a rainbow         |
+
 
 ** Programming Languages
 
-*** Common Lisp
+| Package | Description            |
+|---------+------------------------|
+| [[https://github.com/svaante/dape][dape]]    | A debug adapter client |
 
-| Package  | Description                                      |
-|----------+--------------------------------------------------|
-| [[https://github.com/slime/slime][slime]]    | SLIME (Superior Lisp Interaction Mode for Emacs) |
-| [[https://github.com/purcell/ac-slime][ac-slime]] | Auto completion for SLIME                        |
+*** [[https://common-lisp.net/][Common Lisp]]
+
+| Package       | Description                              |
+|---------------+------------------------------------------|
+| [[https://github.com/slime/slime][slime]]         | Superior Lisp Interaction Mode for Emacs |
+| [[https://github.com/anwyn/slime-company][slime-company]] | Completion backend for Slime             |
+
+*** [[Https://go.dev/][Go]]
+
+| Package    | Description                |
+|------------+----------------------------|
+| [[https://github.com/dominikh/go-mode.el][go-mode.el]] | A mode for editing Go code |
+
+#+BEGIN_SRC shell
+  # gopls - LSP server
+  go install golang.org/x/tools/gopls@latest
+
+  # delve - Go debugger
+  go install github.com/go-delve/delve/cmd/dlv@latest
+
+  # gofumpt - code formatter
+  go install mvdan.cc/gofumpt@latest
+#+END_SRC

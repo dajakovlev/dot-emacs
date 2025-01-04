@@ -1,13 +1,47 @@
 ;;;; init.el --- The Emacs Initialization File -*- lexical-binding: t -*-
 
+;;;;;;;;;;;;;;
+;;;        ;;;
+;;; Common ;;;
+;;;        ;;;
+;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;                    ;;;
-;;; Package management ;;;
-;;;                    ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Text editing settings
+(defun load-settings/text-editing ()
+  ;; Never use tabs for indentation
+  (setq-default indent-tabs-mode nil)
 
-;; straight.el - package management
+  ;; Add a newline automatically at the end of the file
+  (setq-default require-final-newline t)
+
+  ;; Set font
+  (set-face-attribute 'default nil
+		      :family "JetBrains Mono"
+		      :height 110))
+
+;;; User interface settings
+(defun load-settings/user-interface ()
+  ;; Display line numbers
+  (global-display-line-numbers-mode)
+  
+  ;; Display column numbers
+  (setq column-number-mode t))
+
+;;; Other settings
+(defun load-settings/other ()
+  ;; Don't see warnings
+  (setq warning-minimum-level :error))
+
+;;; GNU Emacs settings
+(use-package emacs
+    :init
+    (load-settings/text-editing)
+    (load-settings/user-interface)
+    (load-settings/other)
+    :hook
+    (go-mode . eglot-ensure))
+
+;;; straight.el - package manager
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -24,97 +58,79 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; use-package - package configuration
-(straight-use-package 'use-package)
-
-;; use-package will use straight.el to install packages
+;;; use-package will use straight.el to install packages
 (use-package straight
-  :custom
-  (straight-use-package-by-default t))
+    :custom
+    (straight-use-package-by-default t))
 
+;;; exec-path-from-shell - environment variables synchronizer
+(use-package exec-path-from-shell
+    :if (memq window-system '(mac ns x))
+    :config
+    (exec-path-from-shell-initialize))
 
-;;;;;;;;;;;;;;;;;;;;
-;;;              ;;;
-;;; Text editing ;;;
-;;;              ;;;
-;;;;;;;;;;;;;;;;;;;;
-
-;; Never use tabs for indentation
-(setq-default indent-tabs-mode nil)
-
-;; Add a newline automatically at the end of the file
-(setq-default require-final-newline t)
-
-;; Font
-(set-face-attribute 'default nil
-		    :family "JetBrains Mono"
-		    :height 110)
-
-;; ws-butler - trimming whitespaces
+;;; ws-butler - whitespaces trimmer
 (use-package ws-butler
   :init
   (setq ws-butler-keep-whitespace-before-point nil)
   :config
   (ws-butler-global-mode))
 
-;; auto-complete - auto completion
-(use-package auto-complete
-  :config
-  (setq ac-auto-show-menu t)
-  (setq ac-use-comphist t)
-  (setq ac-quick-help-delay 1)
-  (setq ac-quick-help-prefer-pos-tip nil)
-  (define-globalized-minor-mode real-global-auto-complete-mode
-    auto-complete-mode (lambda ()
-                         (if (not (minibufferp (current-buffer)))
-                             (auto-complete-mode 1))))
-  (real-global-auto-complete-mode t))
+;;; company-mode - text and code completion framework
+(use-package company
+    :hook (after-init . global-company-mode))
 
-
-;;;;;;;;;;;;;;;;;;;;;;
-;;;                ;;;
-;;; User Interface ;;;
-;;;                ;;;
-;;;;;;;;;;;;;;;;;;;;;;
-
-;; Display line numbers
-(global-display-line-numbers-mode)
-
-;; Display column numbers
-(setq column-number-mode t)
-
-;; lab-themes - a color theme
+;;; lab-theme - color theme
 (use-package lab-themes
   :config
   (lab-themes-load-style 'light))
 
-;; rainbow-delimiters - colorize parentheses
+;;; rainbow-delimiters - parentheses like a rainbow
 (use-package rainbow-delimiters
   :hook
   (lisp-interaction-mode . rainbow-delimiters-mode)
   (emacs-lisp-mode . rainbow-delimiters-mode)
   (lisp-mode . rainbow-delimiters-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;                       ;;;
+;;; Programming languages ;;;
+;;;                       ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;
-;;;             ;;;
-;;; Common Lisp ;;;
-;;;             ;;;
-;;;;;;;;;;;;;;;;;;;
+;;; dape - a debug adapter client
+(use-package dape)
+
+;;;
+;;; Common Lisp
+;;;
+
+;;; slime-company - completion backend for Slime
+(use-package slime-company
+  :after (slime company)
+  :config
+  (setq slime-company-completion 'fuzzy
+        slime-company-after-completion 'slime-company-just-one-space))
 
 ;;; slime - SLIME (Superior Lisp Interaction Mode for Emacs)
 (use-package slime
   :config
   (setq inferior-lisp-program "sbcl")
-  (setq slime-load-failed-fasl 'always)
-  (setq slime-net-coding-system 'utf-8-unix)
-  (setq lisp-indent-function 'common-lisp-indent-function)
-  (setq slime-description-autofocus t))
+  (slime-setup '(slime-fancy slime-company)))
 
-;;; ac-slime - auto completion for SLIME
-(use-package ac-slime
-  :config
-  (add-to-list 'ac-modes 'slime-repl-mode)
-  :hook
-  (slime-mode . set-up-slime-ac)
-  (slime-repl-mode . set-up-slime-ac))
+;;;
+;;; Go
+;;;
+
+(defun golang/organize-imports ()
+  (call-interactively #'eglot-code-action-organize-imports))
+
+;;; go-mode.el - a mode for editing Go code
+(use-package go-mode
+    :mode "\\.go\\'"
+    :hook
+    (before-save . golang/organize-imports)
+    (before-save . eglot-format-buffer)
+    :config
+    (setq-default eglot-workspace-configuration
+                  '((:gopls . ((gofumpt . t))))))
