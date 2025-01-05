@@ -32,7 +32,9 @@ copied to a project's root and customized according to needs:
 
   ((go-mode
     .
-    ((dape-configs
+    (
+     ;; dap - debug profile
+     (dape-configs
       .
       ((go-run-test
         modes (go-mode go-ts-mode)
@@ -46,5 +48,7 @@ copied to a project's root and customized according to needs:
         :type "go"
         :showLog "true"
         :args ["-test.v" "-test.run" "^Test<NAME>$"]
-        :program "/path/to/project/root/to-package-that-contains-the-test" ))))))
+        :program "/path/to/project/root/to-package-that-contains-the-test" )))
+     ;; gotest - parameters to pass to the "go test" command
+     (go-test-args . "-tags=integration"))))
 #+END_SRC
