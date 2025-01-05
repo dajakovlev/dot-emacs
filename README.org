@@ -13,6 +13,7 @@ This repository contains my personal configuration for GNU Emacs.
 | [[https://github.com/company-mode/company-mode][company-mode]]         | Text and code completion framework |
 | [[https://github.com/MetroWind/lab-theme][lab-theme]]            | Color theme                        |
 | [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]   | Parentheses like a rainbow         |
+| [[https://github.com/minad/vertico][vertico]]              | VERTical Interactive COmpletion    |
 
 
 * Programming Languages

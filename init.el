@@ -32,15 +32,6 @@
   ;; Don't show warnings
   (setq warning-minimum-level :error))
 
-;;; GNU Emacs settings
-(use-package emacs
-    :init
-    (load-settings/text-editing)
-    (load-settings/user-interface)
-    (load-settings/other)
-    :hook
-    (go-mode . eglot-ensure))
-
 ;;; straight.el - package manager
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -91,6 +82,63 @@
   (lisp-interaction-mode . rainbow-delimiters-mode)
   (emacs-lisp-mode . rainbow-delimiters-mode)
   (lisp-mode . rainbow-delimiters-mode))
+
+;; vertico - VERTical Interactive COmpletion
+(use-package vertico
+  :custom
+  (vertico-cycle t) ; Enable cycling for `vertico-next/previous'
+  :init
+  (vertico-mode))
+
+;; savehist - persist history over Emacs restarts
+(use-package savehist
+  :init
+  (savehist-mode))
+
+;; Vertico settings
+(defun load-settings/vertico ()
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode))
+
+;; orderless - completion style
+(use-package orderless
+  :custom
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
+  ;; (orderless-component-separator #'orderless-escapable-split-on-space)
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+;;; GNU Emacs settings
+(use-package emacs
+    :custom
+    ;; Support opening new minibuffers from inside existing minibuffers.
+    (enable-recursive-minibuffers t)
+    ;; Hide commands in M-x which do not work in the current mode.  Vertico
+    ;; commands are hidden in normal buffers. This setting is useful beyond
+    ;; Vertico.
+    (read-extended-command-predicate #'command-completion-default-include-p)
+    :init
+    (load-settings/text-editing)
+    (load-settings/user-interface)
+    (load-settings/other)
+    (load-settings/vertico)
+    :hook
+    (go-mode . eglot-ensure))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;                       ;;;
