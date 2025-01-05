@@ -3,9 +3,7 @@
 
 This repository contains my personal configuration for GNU Emacs.
 
-* Packages
-
-** Common packages
+* Common packages
 
 | Package              | Description                        |
 |----------------------+------------------------------------|
@@ -17,32 +15,23 @@ This repository contains my personal configuration for GNU Emacs.
 | [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]   | Parentheses like a rainbow         |
 
 
-** Programming Languages
+* Programming Languages
 
 | Package | Description            |
 |---------+------------------------|
 | [[https://github.com/svaante/dape][dape]]    | A debug adapter client |
 
-*** [[https://common-lisp.net/][Common Lisp]]
+** [[https://common-lisp.net/][Common Lisp]]
 
 | Package       | Description                              |
 |---------------+------------------------------------------|
 | [[https://github.com/slime/slime][slime]]         | Superior Lisp Interaction Mode for Emacs |
 | [[https://github.com/anwyn/slime-company][slime-company]] | Completion backend for Slime             |
 
-*** [[Https://go.dev/][Go]]
+** [[Https://go.dev/][Go]]
 
 | Package    | Description                |
 |------------+----------------------------|
 | [[https://github.com/dominikh/go-mode.el][go-mode.el]] | A mode for editing Go code |
 
-#+BEGIN_SRC shell
-  # gopls - LSP server
-  go install golang.org/x/tools/gopls@latest
-
-  # delve - Go debugger
-  go install github.com/go-delve/delve/cmd/dlv@latest
-
-  # gofumpt - code formatter
-  go install mvdan.cc/gofumpt@latest
-#+END_SRC
+[[file:docs/go.org][How to set up the environment properly]].

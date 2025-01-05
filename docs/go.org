@@ -1,0 +1,50 @@
+#+TITLE:  Go
+#+AUTHOR: D. A. Jakovlev
+
+* Environment variables
+
+~$GOPATH/bin~ should be in ~PATH~.
+
+* Dependencies
+
+To install dependencies you should execute the following script:
+
+#+BEGIN_SRC shell
+  #!/usr/bin/env sh
+  
+  # gopls - LSP server
+  go install golang.org/x/tools/gopls@latest
+
+  # delve - Go debugger
+  go install github.com/go-delve/delve/cmd/dlv@latest
+
+  # gofumpt - code formatter
+  go install mvdan.cc/gofumpt@latest
+#+END_SRC
+
+* Debugger
+
+The following code is an example of ~.dir-locals.el~ that should be
+copied to a project's root and customized according to needs:
+
+#+BEGIN_SRC emacs-lisp
+  ;;;; .dir-locals.el
+
+  ((go-mode
+    .
+    ((dape-configs
+      .
+      ((go-run-test
+        modes (go-mode go-ts-mode)
+        command "dlv"
+        command-args ("dap" "--listen" "localhost:55878")
+        command-cwd "/path/to/project/root"
+        host "localhost"
+        port 55878
+        :request "launch"
+        :mode "test"
+        :type "go"
+        :showLog "true"
+        :args ["-test.v" "-test.run" "^Test<NAME>$"]
+        :program "/path/to/project/root/to-package-that-contains-the-test" ))))))
+#+END_SRC
