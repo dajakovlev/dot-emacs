@@ -30,8 +30,9 @@ This repository contains my personal configuration for GNU Emacs.
 
 ** [[Https://go.dev/][Go]]
 
-| Package    | Description                |
-|------------+----------------------------|
-| [[https://github.com/dominikh/go-mode.el][go-mode.el]] | A mode for editing Go code |
+| Package | Description                |
+|---------+----------------------------|
+| [[https://github.com/dominikh/go-mode.el][go-mode]] | A mode for editing Go code |
+| [[https://github.com/nlamirault/gotest.el][gotest]]  | Run Go tests and programs  |
 
 [[file:docs/go.org][How to set up the environment properly]].

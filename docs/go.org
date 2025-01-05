@@ -11,14 +11,14 @@ To install dependencies you should execute the following script:
 
 #+BEGIN_SRC shell
   #!/usr/bin/env sh
-  
-  # gopls - LSP server
+
+  # gopls - LSP server (for go-mode and eglot)
   go install golang.org/x/tools/gopls@latest
 
-  # delve - Go debugger
+  # delve - Go debugger (for dape)
   go install github.com/go-delve/delve/cmd/dlv@latest
 
-  # gofumpt - code formatter
+  # gofumpt - code formatter (for go-mode and eglot)
   go install mvdan.cc/gofumpt@latest
 #+END_SRC
 

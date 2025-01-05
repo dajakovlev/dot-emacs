@@ -125,7 +125,7 @@
 (defun golang/organize-imports ()
   (call-interactively #'eglot-code-action-organize-imports))
 
-;;; go-mode.el - a mode for editing Go code
+;;; go-mode - a mode for editing Go code
 (use-package go-mode
     :mode "\\.go\\'"
     :hook
@@ -134,3 +134,15 @@
     :config
     (setq-default eglot-workspace-configuration
                   '((:gopls . ((gofumpt . t))))))
+
+;;; gotest - run Go tests and programs
+(use-package gotest
+  :after go-mode
+  :bind
+  (:map go-mode-map
+        ("C-c t f" . go-test-current-file)
+        ("C-c t t" . go-test-current-test)
+        ("C-c t j" . go-test-current-project)
+        ("C-c t b" . go-test-current-benchmark)
+        ("C-c t c" . go-test-current-coverage)
+        ("C-c t x" . go-run)))
